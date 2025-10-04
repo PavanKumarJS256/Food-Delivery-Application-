@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        form { 
+            background-color: rgb(201, 142, 47); 
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="background-color: rgb(240, 175, 71); text-align: center;">UPDATE RESTAURANT</h1> 
+    <form action='/validateupdate/' method="post">
+        {% csrf_token %}
+        <label>Restaurant ID</label>
+        <input type="text" name="id" required><br><br>
+        <label>New Name</label>
+        <input type="text" name="new_name" required><br><br>
+        <label>New Description</label>
+        <input type="text" name="new_des" required><br><br>
+        <input type="submit" value="Update">
+    </form> 
+</body>
+</html>

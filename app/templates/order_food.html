@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Food</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #343a40;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        form {
+            margin-top: 20px;
+        }
+        form p {
+            margin-bottom: 10px;
+        }
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Order Food</h1>
+    </header>
+    <main>
+        <p><strong>Restaurant:</strong> {{ food.restaurant.rest_name }}</p>
+        <p><strong>Food:</strong> {{ food.name }}</p>
+        <p><strong>Price:</strong> ${{ food.price }}</p>
+        <p><strong>User:</strong> {{ request.user.first_name }} {{ request.user.last_name }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" id="id_latitude" name="latitude">
+            <input type="hidden" id="id_longitude" name="longitude">
+            <div id="map"></div>
+            <button type="submit">Order</button>
+        </form>
+    </main>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13); // Default view, you can change the coordinates
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker;
+
+        function onMapClick(e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('id_latitude').value = e.latlng.lat;
+            document.getElementById('id_longitude').value = e.latlng.lng;
+        }
+
+        map.on('click', onMapClick);
+    </script>
+</body>
+</html>

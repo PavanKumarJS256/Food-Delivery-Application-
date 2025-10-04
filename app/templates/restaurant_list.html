@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .restaurants {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .restaurant {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            width: calc(30% - 20px); /* Adjusted width to account for margin and spacing */
+            margin-bottom: 20px;
+        }
+        .restaurant img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .restaurant-info {
+            padding: 10px;
+            text-align: left;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            text-align: center;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div id="branding">
+            <h1>Restaurants</h1>
+        </div>
+    </div>
+</header>
+
+<section class="restaurants">
+    {% for restaurant in restaurants  %}
+    <a href="/restaurants_foods/{{restaurant.id}}">
+    <div class="restaurant">
+        <img src="{{restaurant.rest_img}}" alt="Restaurant Image">
+        <div class="restaurant-info">
+            <h3>{{ restaurant.rest_name }}</h3></a>
+            <p>Category: {{ restaurant.rest_type }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+</body>
+</html>

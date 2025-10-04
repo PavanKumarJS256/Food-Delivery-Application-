@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Restaurant</title>
+</head>
+<body>
+    <h1>Add Restaurant</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Restaurant</button>
+    </form>
+    <a href='/admin_rest_list/'>Back to restaurants</a>
+</body>
+</html>

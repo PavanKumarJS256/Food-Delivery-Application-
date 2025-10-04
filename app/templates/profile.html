@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .profile-container p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .orders-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .orders-list li {
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .orders-list li strong {
+            display: inline-block;
+            width: 100px;
+            color: #333;
+        }
+        .back-to-home {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .back-to-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Profile</h1>
+        <p><strong>Username:</strong> {{ request.user.username }}</p>
+        <p><strong>First name:</strong> {{ request.user.first_name }}</p>
+        <p><strong>Last name:</strong> {{ request.user.last_name }}</p>
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <a href="/edit_profile/" class="button">Edit Profile</a>
+
+        <h2>Orders</h2>
+        {% if orders %}
+            <ul class="orders-list">
+            {% for order in orders %}
+                <li>
+                    <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                    <p><strong>Food:</strong> {{ order.food.name }}</p>
+                    <p><strong>Restaurant:</strong> {{ order.food.restaurant.rest_name }}</p>
+                    <p><strong>Price:</strong> ${{ order.food.price }}</p>
+                    <p><strong>Address:</strong> {{ order.address }}</p>
+                    <p><strong>Ordered at:</strong> {{ order.ordered_at }}</p>
+                    <p><a href="/submit_review/{{order.order_id}}">Submit Review</a></p>
+
+
+                    {% if order.review %}
+                    <div class="review">
+                        <p><strong>Rating:</strong> {{ order.review.rating }}</p>
+                        <p><strong>Comment:</strong> {{ order.review.comment }}</p>
+                        <p><strong>Reviewed at:</strong> {{ order.review.created_at }}</p>
+                    </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no orders.</p>
+        {% endif %}
+        <h2>Favorites</h2>
+        {% if favorites %}
+            <ul>
+            {% for favorite in favorites %}
+                <li class="favorite">
+                    <h2><a href="/favorites/{{favorite.restaurant.id}}">{{ favorite.restaurant.rest_name }}</a></h2>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no favorite restaurants.</p>
+        {% endif %}
+        <a href="/userhome/" class="back-to-home">Back to Home</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

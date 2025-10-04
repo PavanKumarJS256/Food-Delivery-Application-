@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <style>
+        body {
+            background-image: url("{% static 'images/rest.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            text-align: center;
+        }
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: lightgray;
+        }
+        .button {
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .button:hover {
+            background-color: darkblue;
+        }
+        .action-links a {
+            margin: 0 5px;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: rgb(31, 207, 31);
+            color: white;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        .action-links a:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Restaurants ID</th>
+            <th>Restaurants Name</th>
+            <th>Restaurants Type</th>
+            
+        </tr>
+        {% for r in rest %}
+        <tr>
+            <td>{{r.rest_id}}</td>
+            <td>{{r.rest_name}}</td>
+            <td>{{r.rest_type}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="action-links" style="text-align: center; margin-top: 20px;">
+        <a href='/restaurants/add/'>ADD</a>
+        <a href='/restdelete/'>DELETE</a>
+        <a href='/restupdate/'>UPDATE</a>
+        <a href="/foods/add/" class="button">Food Menu</a>
+    </div>
+</body>
+</html>
